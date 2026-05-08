@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Library Manager</title>
+
+<style>
+body {
+    font-family: Arial;
+
+    
+    background-image: url("a_high_quality_atmospheric_background_image_for_a_library_manager_application..png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    height: 100vh;
+    margin: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.loader {
+    border: 6px solid #f3f3f3;
+    border-top: 6px solid #3498db;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+    margin-bottom: 20px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+h1 {
+    display: none;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 70px;
+    color: #f3f3f3;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="loader" id="loader"></div>
+
+<h1 id="welcome">Welcome to Library Manager 📚</h1>
+
+<script>
+setTimeout(() => {
+    document.getElementById("loader").style.display = "none";
+    document.getElementById("welcome").style.display = "block";
+}, 2000); // 2 seconds loading
+
+setTimeout(() => {
+    window.location = "login.html";
+}, 4000); // redirect after 4 seconds
+</script>
+
+</body>
+</html>
