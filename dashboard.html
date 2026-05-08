@@ -187,3 +187,27 @@ async function load() {
 
     drawChart(borrowed, returned);
 }
+function drawChart(borrowed, returned) {
+
+    const ctx = document.getElementById("myChart");
+
+    if (myChart) myChart.destroy();
+
+    myChart = new Chart(ctx, {
+        type: "bar",
+        data: {
+            labels: ["Borrowed", "Returned"],
+            datasets: [{
+                data: [borrowed, returned],
+                backgroundColor: ["red", "green"]
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            }
+        }
+    });
+}
