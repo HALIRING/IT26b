@@ -110,7 +110,7 @@ tr:hover {
 <div class="left">
     <h2>Borrow Book</h2>
 
-    <!-- ✅ Student ID now numeric-friendly -->
+    <!-- Student ID now numbers only -->
     <input id="student_id" placeholder="Student ID" type="text" inputmode="numeric">
 
     <input id="book_name" placeholder="Book Name">
@@ -148,3 +148,42 @@ tr:hover {
     </table>
 
 </div>
+<script>
+
+const list = document.getElementById("list");
+let myChart;
+
+document.getElementById("user").innerText =
+localStorage.getItem("fullname") || "Student";
+
+async function load() {
+
+    const user_id = localStorage.getItem("user_id");
+
+    const res = await fetch("http://localhost:3000/books?user_id=" + user_id);  
+    const data = await res.json();
+
+    list.innerHTML = "";
+
+    let borrowed = 0;
+    let returned = 0;
+
+    data.forEach(b => {
+
+        if (b.status === "Borrowed") borrowed++;
+        else if (b.status === "Returned") returned++;
+
+        list.innerHTML += `
+        <tr>
+            <td>${b.student_id || ""}</td>
+            <td>${b.fullname || "Unknown"}</td>
+            <td>${b.book_name || ""}</td>
+            <td>${b.date || ""}</td>
+            <td style="color:${b.status==='Returned'?'green':'red'}">
+                ${b.status}
+            </td>
+        </tr>`;
+    });
+
+    drawChart(borrowed, returned);
+}
