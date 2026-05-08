@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Library Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+<style>
+
+body {
+    margin: 0;
+    font-family: Arial;
+    display: flex;
+    height: 100vh;
+}
+
+/* LEFT */
+.left {
+    width: 30%;
+    height: 100vh;
+    background-image: url("1.png");
+    background-size: cover;
+    background-position: center;
+    padding: 20px;
+    box-sizing: border-box;
+    font-size: 26px;
+    font-family: Impact;
+    position: relative;
+}
+
+/* RIGHT */
+.right {
+    width: 70%;
+    background: #ffffff;
+    padding: 20px;
+    overflow-y: auto;
+    background-image: url("2.png");
+    background-repeat: no-repeat;
+    background-position: right bottom;
+    background-size: 250px;
+}
+
+/* TOPBAR */
+.topbar {
+    background: #34495e;
+    color: white;
+    padding: 12px 15px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+/* INPUT */
+input {
+    width: 100%;
+    padding: 10px;
+    margin: 6px 0;
+    border-radius: 5px;
+    border: none;
+}
+
+/* BUTTON */
+button {
+    width: 100%;
+    padding: 10px;
+    background: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* TABLE */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+th, td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+}
+
+th {
+    background: #2c3e50;
+    color: white;
+}
+
+tr:hover {
+    background: #f1f1f1;
+}
+
+/* LOGOUT */
+.logout-btn {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    width: calc(100% - 40px);
+    background: #27201f;
+}
