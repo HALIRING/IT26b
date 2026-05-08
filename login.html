@@ -155,7 +155,25 @@ function goRegister() {
     window.location = "register.html";
 }
 
+/* ADMIN LOGIN */
+function adminLogin() {
+    const user = prompt("Enter Admin Username:");
+    const pass = prompt("Enter Admin Password:");
 
+    if (user === "admin" && pass === "1234") {
+
+        localStorage.setItem("fullname", "Administrator");
+
+        showMessage("Admin login successful!", "success");
+
+        setTimeout(() => {
+            window.location = "adminDashboard.html";
+        }, 1500);
+
+    } else {
+        showMessage("Invalid Admin Credentials!", "error");
+    }
+}
 
 </script>
 
