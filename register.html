@@ -75,7 +75,7 @@ button {
 <div class="box">
     <h2>Create Account</h2>
 
-    <!-- ✅ STUDENT ID FIELD ADDED -->
+    <!-- STUDENT ID FIELD ADDED -->
     <input id="student_id" placeholder="Student ID">
 
     <input id="firstname" placeholder="First Name">
@@ -90,3 +90,27 @@ button {
 
     <div id="message"></div>
 </div>
+<script>
+
+function showMessage(text, type) {
+    const msg = document.getElementById("message");
+    msg.style.display = "block";
+    msg.className = type;
+    msg.innerText = text;
+
+    setTimeout(() => msg.style.display = "none", 3000);
+}
+
+async function register() {
+
+    const student_id = document.getElementById("student_id").value.trim();
+    const firstname = document.getElementById("firstname").value.trim();
+    const middlename = document.getElementById("middlename").value.trim();
+    const lastname = document.getElementById("lastname").value.trim();
+    const username = document.getElementById("username").value.trim();
+    const password = document.getElementById("password").value.trim();
+    </script>
+}
+
+</body>
+</html>
