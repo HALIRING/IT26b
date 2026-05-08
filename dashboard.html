@@ -101,3 +101,50 @@ tr:hover {
     width: calc(100% - 40px);
     background: #27201f;
 }
+</style>
+</head>
+
+<body>
+
+<!-- LEFT -->
+<div class="left">
+    <h2>Borrow Book</h2>
+
+    <!-- ✅ Student ID now numeric-friendly -->
+    <input id="student_id" placeholder="Student ID" type="text" inputmode="numeric">
+
+    <input id="book_name" placeholder="Book Name">
+
+    <button onclick="borrow()">Add Borrow</button>
+
+    <button class="logout-btn" onclick="logout()">⏻ Logout</button>
+</div>
+
+<!-- RIGHT -->
+<div class="right">
+
+    <div class="topbar">
+        Welcome, <span id="user"></span>
+    </div>
+
+    <div style="height:220px;background:white;border-radius:10px;padding:10px;margin-bottom:20px;">
+        <canvas id="myChart"></canvas>
+    </div>
+
+    <h2 style="text-align:center;">Borrowed Books Record</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Student ID</th>
+                <th>Student Name</th>
+                <th>Book</th>
+                <th>Date</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+
+        <tbody id="list"></tbody>
+    </table>
+
+</div>
