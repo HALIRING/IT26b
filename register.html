@@ -115,6 +115,11 @@ async function register() {
         showMessage("Fill all required fields!", "error");
         return;
     }
+    //  Student ID must be numbers only
+    if (!/^[0-9]+$/.test(student_id)) {
+        showMessage("Student ID must be numbers only!", "error");
+        return;
+    }
 
     </script>
 }
