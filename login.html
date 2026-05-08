@@ -104,76 +104,7 @@ button:hover {
     <button class="register-btn" onclick="goRegister()">Create Account</button>
     <button class="admin-btn" onclick="adminLogin()">👑 Admin Login</button>
 
-    <!-- MESSAGE -->
-    <div id="message"></div>
-</div>
-
-<script>
-
-/* MESSAGE FUNCTION */
-function showMessage(text, type) {
-    const msg = document.getElementById("message");
-    msg.style.display = "block";
-    msg.className = type;
-    msg.innerText = text;
-
-    setTimeout(() => {
-        msg.style.display = "none";
-    }, 2500);
-}
-
-/* STUDENT LOGIN */
-async function login() {
-
-    const res = await fetch("http://localhost:3000/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            username: username.value,
-            password: password.value
-        })
-    });
-
-    const data = await res.json(); // ✅ THIS IS REQUIRED
-
-   if (data.success) {
-
-    localStorage.setItem("user_id", data.user_id);
-    localStorage.setItem("fullname", data.fullname);
-    localStorage.setItem("role", data.role);
-
-    if (data.role === "admin") {
-        window.location = "adminDashboard.html";
-    } else {
-        window.location = "dashboard.html";
-    }
-}
-
-}
-/* REGISTER PAGE */
-function goRegister() {
-    window.location = "register.html";
-}
-
-/* ADMIN LOGIN */
-function adminLogin() {
-    const user = prompt("Enter Admin Username:");
-    const pass = prompt("Enter Admin Password:");
-
-    if (user === "admin" && pass === "1234") {
-
-        localStorage.setItem("fullname", "Administrator");
-
-        showMessage("Admin login successful!", "success");
-
-        setTimeout(() => {
-            window.location = "adminDashboard.html";
-        }, 1500);
-
-    } else {
-        showMessage("Invalid Admin Credentials!", "error");
-    }
-}
+    
 
 </script>
 
