@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Admin Dashboard</title>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial;
+    display: flex;
+    height: 100vh;
+
+    background-image: url("a_close_up_shallow_depth_of_field_shot_of_a_light_oak_library_desk._a_stack_of.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* OVERLAY */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 0;
+}
+
+/* LEFT */
+.left {
+    width: 25%;
+    background: rgba(80,70,60,0.95);
+    color: white;
+    padding: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+/* RIGHT */
+.right {
+    width: 75%;
+    padding: 20px;
+    overflow-y: auto;
+    position: relative;
+    z-index: 1;
+}
+
+/* TOPBAR */
+.topbar {
+    background: rgba(255,255,255,0.15);
+    color: white;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+/* CHART */
+.chart-box {
+    background: white;
+    padding: 10px;
+    border-radius: 10px;
+    height: 220px;
+    margin-bottom: 20px;
+}
+
+/* TABLE */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+th {
+    background: #5a4a3b;
+    color: white;
+    padding: 12px;
+}
+
+td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+}
+
+tr:hover {
+    background: #f1f1f1;
+}
+
+/* BUTTONS */
+button {
+    padding: 6px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.status-btn {
+    color: white;
+}
+
+.delete-btn {
+    background: black;
+    color: white;
+}
+
+.logout-btn {
+    width: 100%;
+    margin-top: 20px;
+    padding: 12px;
+    background: orange;
+    color: white;
+}
+</style>
+
+</head>
+
+<body>
+
+<!-- LEFT -->
+<div class="left">
+    <h2>👑 Admin Panel</h2>
+    <p>Library System</p>
+
+    <button class="logout-btn" onclick="logout()">Logout</button>
+</div>
+
+<!-- RIGHT -->
+<div class="right">
+
+    <div class="topbar">Welcome Admin</div>
+
+    <!-- CHART -->
+    <div class="chart-box">
+        <canvas id="myChart"></canvas>
+    </div>
+
+    <!-- TABLE -->
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Student Name</th>
+                <th>Book</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody id="list"></tbody>
+    </table>
+
+</div>
+
+<script>
+
+let myChart;
+const list = document.getElementById("list");
+
+/* LOAD DATA */
+async function loadRecords() {
+
+    const res = await fetch("http://localhost:3000/books");
+    const data = await res.json();
+
+    list.innerHTML = "";
+
+    let borrowed = 0;
+    let returned = 0;
+
+    data.forEach(b => {
+
+        if (b.status === "Borrowed") borrowed++;
+        else if (b.status === "Returned") returned++;
+
+        list.innerHTML += `
+        <tr>
+            <td>${b.student_id ?? "-"}</td>
+            <td>${b.fullname ?? "No Name"}</td>
+            <td>${b.book_name}</td>
+            <td>${b.date}</td>
+
+            <td>
+                <button class="status-btn"
+                    style="background:${b.status === 'Returned' ? '#2ecc71' : '#e74c3c'}"
+                    onclick="toggleStatus(${b.id}, '${b.status}')">
+                    ${b.status}
+                </button>
+            </td>
+
+            <td>
+                <button class="delete-btn" onclick="deleteRecord(${b.id})">Delete</button>
+            </td>
+        </tr>`;
+    });
+
+    drawChart(borrowed, returned);
+}
+
+/* CHART */
+function drawChart(borrowed, returned) {
+
+    const ctx = document.getElementById("myChart").getContext("2d");
+
+    if (myChart) myChart.destroy();
+
+    myChart = new Chart(ctx, {
+        type: "bar",
+        data: {
+            labels: ["Borrowed", "Returned"],
+            datasets: [{
+                label: "Library Overview",
+                data: [borrowed, returned],
+                backgroundColor: ["#e74c3c", "#2ecc71"]
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            }
+        }
+    });
+}
+
+/* TOGGLE STATUS */
+async function toggleStatus(id, status) {
+
+    const newStatus = status === "Returned" ? "Borrowed" : "Returned";
+
+    await fetch("http://localhost:3000/books/" + id, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status: newStatus })
+    });
+
+    loadRecords();
+}
+
+/* DELETE */
+async function deleteRecord(id) {
+    await fetch("http://localhost:3000/books/" + id, {
+        method: "DELETE"
+    });
+
+    loadRecords();
+}
+
+/* LOGOUT */
+function logout() {
+    window.location = "login.html";
+}
+
+loadRecords();
+
+</script>
+
+</body>
+</html>
