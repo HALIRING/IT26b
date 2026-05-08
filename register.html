@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Register</title>
+
+<style>
+body {
+    font-family: Arial;
+    background-image: url("a_high_quality_atmospheric_background_image_for_a_library_manager_application..png");
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.box {
+    background: white;
+    padding: 30px;
+    width: 320px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    box-sizing: border-box;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.register-btn {
+    background: green;
+    color: white;
+}
+
+.back-btn {
+    background: #3498db;
+    color: white;
+}
+
+#message {
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    display: none;
+}
+
+.success {
+    background: #2ecc71;
+    color: white;
+}
+
+.error {
+    background: #e74c3c;
+    color: white;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+    <h2>Create Account</h2>
+
+    <!-- ✅ STUDENT ID FIELD ADDED -->
+    <input id="student_id" placeholder="Student ID">
+
+    <input id="firstname" placeholder="First Name">
+    <input id="middlename" placeholder="Middle Name">
+    <input id="lastname" placeholder="Last Name">
+
+    <input id="username" placeholder="Username">
+    <input id="password" type="password" placeholder="Password">
+
+    <button class="register-btn" onclick="register()">Register</button>
+    <button class="back-btn" onclick="goLogin()">Back to Login</button>
+
+    <div id="message"></div>
+</div>
