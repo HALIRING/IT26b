@@ -109,6 +109,13 @@ async function register() {
     const lastname = document.getElementById("lastname").value.trim();
     const username = document.getElementById("username").value.trim();
     const password = document.getElementById("password").value.trim();
+
+    //  VALIDATION
+    if (!student_id || !firstname || !lastname || !username || !password) {
+        showMessage("Fill all required fields!", "error");
+        return;
+    }
+
     </script>
 }
 
