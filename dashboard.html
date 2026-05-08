@@ -211,3 +211,31 @@ function drawChart(borrowed, returned) {
         }
     });
 }
+async function borrow() {
+
+    const user_id = localStorage.getItem("user_id");
+
+    const student_id = document.getElementById("student_id").value.trim();
+    const book_name = document.getElementById("book_name").value.trim();
+
+    //  VALIDATION (ONLY NUMBERS ALLOWED)
+    if (!/^[0-9]+$/.test(student_id)) {
+        alert("Please enter a valid student id");
+        return;
+    }
+
+    if (!student_id || !book_name) return;
+
+    await fetch("http://localhost:3000/books", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            user_id,
+            student_id,
+            book_name,
+            date: new Date().toLocaleString()
+        })
+    });
+
+    load();
+}
