@@ -120,9 +120,39 @@ async function register() {
         showMessage("Student ID must be numbers only!", "error");
         return;
     }
+    const res = await fetch("http://localhost:3000/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            id: student_id,
+            firstname,
+            middlename,
+            lastname,
+            username,
+            password
+        })
+    });
+
+    const data = await res.json();
+
+    if (data.success) {
+        showMessage("Registration successful!", "success");
+
+        setTimeout(() => {
+            window.location = "login.html";
+        }, 1500);
+
+    } else {
+        showMessage("Registration failed!", "error");
+    }
+}
+
+function goLogin() {
+    window.location = "login.html";
+}
 
     </script>
-}
+
 
 </body>
 </html>
