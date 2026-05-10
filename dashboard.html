@@ -101,6 +101,7 @@ tr:hover {
     width: calc(100% - 40px);
     background: #27201f;
 }
+
 </style>
 </head>
 
@@ -110,7 +111,7 @@ tr:hover {
 <div class="left">
     <h2>Borrow Book</h2>
 
-    <!-- Student ID now numbers only -->
+    <!-- student-id number lang -->
     <input id="student_id" placeholder="Student ID" type="text" inputmode="numeric">
 
     <input id="book_name" placeholder="Book Name">
@@ -148,6 +149,7 @@ tr:hover {
     </table>
 
 </div>
+
 <script>
 
 const list = document.getElementById("list");
@@ -187,6 +189,7 @@ async function load() {
 
     drawChart(borrowed, returned);
 }
+
 function drawChart(borrowed, returned) {
 
     const ctx = document.getElementById("myChart");
@@ -211,6 +214,7 @@ function drawChart(borrowed, returned) {
         }
     });
 }
+
 async function borrow() {
 
     const user_id = localStorage.getItem("user_id");
@@ -218,7 +222,7 @@ async function borrow() {
     const student_id = document.getElementById("student_id").value.trim();
     const book_name = document.getElementById("book_name").value.trim();
 
-    //  VALIDATION (ONLY NUMBERS ALLOWED)
+    //  VALIDATION (numbers ra ang pwedi)
     if (!/^[0-9]+$/.test(student_id)) {
         alert("Please enter a valid student id");
         return;
@@ -239,6 +243,7 @@ async function borrow() {
 
     load();
 }
+
 function logout() {
     localStorage.clear();
     window.location = "login.html";
