@@ -47,3 +47,150 @@ app.post("/register", (req, res) => {
         }
     );
 });
+
+//  LOGIN 
+app.post("/login", (req, res) => {
+
+    const { username, password } = req.body;
+
+    const sql = `
+        SELECT 
+            id,
+            firstname,
+            middlename,
+            lastname,
+            username,
+            role
+        FROM users
+        WHERE username=? AND password=?
+    `;
+
+    db.query(sql, [username, password], (err, result) => {
+
+        if (err) {
+            console.log("LOGIN ERROR:", err);
+            return res.json({ success: false });
+        }
+
+        if (result.length > 0) {
+
+            const user = result[0];
+
+            // iyang i build ang fullname
+            const fullname = `${user.firstname || ""} ${user.middlename || ""} ${user.lastname || ""}`.trim();
+
+            res.json({
+                success: true,
+                user_id: user.id,
+                fullname: fullname,
+                role: user.role
+            });
+
+        } else {
+            res.json({ success: false });
+        }
+    });
+});
+
+
+//  BORROW BOOK 
+app.post("/books", (req, res) => {
+
+    const { user_id, student_id, book_name, date } = req.body;
+
+    db.query(
+        "INSERT INTO books (user_id, student_id, book_name, date, status) VALUES (?,?,?,?,?)",
+        [user_id, student_id, book_name, date, "Borrowed"],
+        (err) => {
+
+            if (err) {
+                console.log("BORROW ERROR:", err);
+                return res.json({ success: false });
+            }
+
+            res.json({ success: true });
+        }
+    );
+});
+
+
+// INNER JOIN
+app.get("/books", (req, res) => {
+
+    const user_id = req.query.user_id;
+
+    let sql = `
+        SELECT 
+            books.id,
+            books.student_id,
+            books.book_name,
+            books.date,
+            books.status,
+            CONCAT(users.firstname,' ',users.middlename,' ',users.lastname) AS fullname
+        FROM books
+        JOIN users ON books.user_id = users.id
+    `;
+
+    let values = [];
+
+    if (user_id) {
+        sql += " WHERE books.user_id = ?";
+        values.push(user_id);
+    }
+
+    db.query(sql, values, (err, result) => {
+
+        if (err) {
+            console.log(err);
+            return res.json([]);
+        }
+
+        res.json(result);
+    });
+});
+
+
+//  UPDATE STATUS 
+app.put("/books/:id", (req, res) => {
+
+    const { status } = req.body;
+
+    db.query(
+        "UPDATE books SET status=? WHERE id=?",
+        [status, req.params.id],
+        (err) => {
+
+            if (err) {
+                console.log("UPDATE ERROR:", err);
+                return res.json({ success: false });
+            }
+
+            res.json({ success: true });
+        }
+    );
+});
+
+
+//  DELETE 
+app.delete("/books/:id", (req, res) => {
+
+    db.query(
+        "DELETE FROM books WHERE id=?",
+        [req.params.id],
+        (err) => {
+
+            if (err) {
+                console.log("DELETE ERROR:", err);
+                return res.json({ success: false });
+            }
+
+            res.json({ success: true });
+        }
+    );
+});
+
+
+//  START SERVER 
+app.listen(3000, () => {
+    console.log("Server running on http://localhost:3000");
+});
