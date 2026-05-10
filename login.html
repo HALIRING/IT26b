@@ -104,13 +104,13 @@ button:hover {
     <button class="register-btn" onclick="goRegister()">Create Account</button>
     <button class="admin-btn" onclick="adminLogin()">👑 Admin Login</button>
 
-    <!-- MESSAGE -->
+    
     <div id="message"></div>
 </div>
 
 <script>
 
-/* MESSAGE FUNCTION */
+
 function showMessage(text, type) {
     const msg = document.getElementById("message");
     msg.style.display = "block";
@@ -134,7 +134,7 @@ async function login() {
         })
     });
 
-    const data = await res.json(); // ✅ THIS IS REQUIRED
+    const data = await res.json(); 
 
    if (data.success) {
 
@@ -160,7 +160,7 @@ function adminLogin() {
     const user = prompt("Enter Admin Username:");
     const pass = prompt("Enter Admin Password:");
 
-    if (user === "admin" && pass === "1234") {
+    if (user === "haliring" && pass === "1234") {
 
         localStorage.setItem("fullname", "Administrator");
 

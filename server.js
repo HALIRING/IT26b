@@ -7,7 +7,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-//  DATABASE CONNECTION NIYA
+// Connection sa database
 const db = mysql.createConnection({
     host: "localhost",
     user: "root",
@@ -23,7 +23,8 @@ db.connect(err => {
     }
 });
 
-// PARA REGISTER 
+
+//  REGISTER 
 app.post("/register", (req, res) => {
 
     const { firstname, middlename, lastname, username, password } = req.body;
@@ -48,7 +49,8 @@ app.post("/register", (req, res) => {
     );
 });
 
-//  LOGIN 
+
+//  LOGIN  
 app.post("/login", (req, res) => {
 
     const { username, password } = req.body;
@@ -76,7 +78,7 @@ app.post("/login", (req, res) => {
 
             const user = result[0];
 
-            // iyang i build ang fullname
+            // i usa ang first name , middle ug last
             const fullname = `${user.firstname || ""} ${user.middlename || ""} ${user.lastname || ""}`.trim();
 
             res.json({
@@ -114,7 +116,7 @@ app.post("/books", (req, res) => {
 });
 
 
-// INNER JOIN
+//  inner join 
 app.get("/books", (req, res) => {
 
     const user_id = req.query.user_id;
@@ -150,7 +152,7 @@ app.get("/books", (req, res) => {
 });
 
 
-//  UPDATE STATUS 
+// UPDATE 
 app.put("/books/:id", (req, res) => {
 
     const { status } = req.body;

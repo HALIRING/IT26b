@@ -75,9 +75,7 @@ button {
 <div class="box">
     <h2>Create Account</h2>
 
-    <!-- STUDENT ID FIELD ADDED -->
-    <input id="student_id" placeholder="Student ID">
-
+    
     <input id="firstname" placeholder="First Name">
     <input id="middlename" placeholder="Middle Name">
     <input id="lastname" placeholder="Last Name">
@@ -90,6 +88,7 @@ button {
 
     <div id="message"></div>
 </div>
+
 <script>
 
 function showMessage(text, type) {
@@ -103,28 +102,22 @@ function showMessage(text, type) {
 
 async function register() {
 
-    const student_id = document.getElementById("student_id").value.trim();
     const firstname = document.getElementById("firstname").value.trim();
     const middlename = document.getElementById("middlename").value.trim();
     const lastname = document.getElementById("lastname").value.trim();
     const username = document.getElementById("username").value.trim();
     const password = document.getElementById("password").value.trim();
 
-    //  VALIDATION
-    if (!student_id || !firstname || !lastname || !username || !password) {
+    // VALIDATION 
+    if (!firstname || !lastname || !username || !password) {
         showMessage("Fill all required fields!", "error");
         return;
     }
-    //  Student ID must be numbers only
-    if (!/^[0-9]+$/.test(student_id)) {
-        showMessage("Student ID must be numbers only!", "error");
-        return;
-    }
+
     const res = await fetch("http://localhost:3000/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-            id: student_id,
             firstname,
             middlename,
             lastname,
@@ -151,8 +144,7 @@ function goLogin() {
     window.location = "login.html";
 }
 
-    </script>
-
+</script>
 
 </body>
 </html>
